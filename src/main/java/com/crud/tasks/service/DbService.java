@@ -15,4 +15,11 @@ public class DbService {
     public List<Task> getAllTasks() {
         return repository.findAll();
     }
+    public Task getTask(Long taskId) {
+        Task task = new Task();
+        if (repository.findById(taskId) != null) {
+            task = repository.findById(taskId);
+        }
+        return task;
+    }
 }
