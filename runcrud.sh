@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-export CATALINA_HOME=Programowanie/apache-tomcat-9.0.19/
+export CATALINA_HOME=~/Programowanie/apache-tomcat-9.0.19
 
 stop_tomcat()
 {
@@ -15,7 +15,7 @@ start_tomcat()
 
 rename() {
   rm build/libs/crud.war
-  if mv build/libs/kodilla-tasks-new-version-0.0.1-SNAPSHOT.war build/libs/crud.war; then
+  if mv build/libs/tasks-0.0.1-SNAPSHOT.war build/libs/crud.war; then
      echo "Successfully renamed file"
   else
      echo "Cannot rename file"
@@ -24,7 +24,7 @@ rename() {
 }
 
 copy_file() {
-  if cp build/libs/crud.war $CATALINA_HOME/webapps; then
+  if cp build/libs/crud.war ${CATALINA_HOME}/webapps; then
      start_tomcat
   else
      fail
