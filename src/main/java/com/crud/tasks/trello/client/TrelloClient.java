@@ -33,7 +33,7 @@ public class TrelloClient {
 
     public List<TrelloBoardDto> getTrelloBoards() {
 
-        URI url = urlBuilder(trelloApiEndpoint, trelloAppKey, trelloToken, trelloUsername);
+        URI url = urlBuilder();
 
         TrelloBoardDto[] boardsResponse = restTemplate.getForObject(url, TrelloBoardDto[].class);
 
@@ -43,7 +43,7 @@ public class TrelloClient {
         return new ArrayList<>();
     }
 
-    private URI urlBuilder(String trelloAppKey, String trelloApiEndpoint, String trelloToken, String trelloUsername) {
+    private URI urlBuilder() {
        return UriComponentsBuilder.fromHttpUrl(trelloApiEndpoint + "/members/" + trelloUsername + "/boards")
                 .queryParam("key", trelloAppKey)
                 .queryParam("token", trelloToken)
