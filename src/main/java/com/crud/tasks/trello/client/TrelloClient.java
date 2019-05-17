@@ -32,6 +32,7 @@ public class TrelloClient {
     public List<TrelloBoardDto> getTrelloBoards() {
 
         URI url = urlBuilder();
+        LOGGER.info("restTemplate.getObject url: " + url.toString());
 
         try {
             TrelloBoardDto[] boardsResponse = restTemplate.getForObject(url, TrelloBoardDto[].class);

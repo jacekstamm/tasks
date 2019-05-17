@@ -38,10 +38,10 @@ public class TrelloClientTest{
         TrelloBoardDto[] trelloBoards = new TrelloBoardDto[1];
         trelloBoards[0] = new TrelloBoardDto("test_id", "test_board", new ArrayList<>());
 
-        URI url = new URI("https://test.com/members/jacekstamm/boards?key=test&token=test&fields=name,id&lists=all");
+
+        URI url = new URI("https://test.com/members/null/boards?key=test&token=test&fields=name,%20id&lists=all");
 
         Mockito.when(restTemplate.getForObject(url, TrelloBoardDto[].class)).thenReturn(trelloBoards);
-
         //When
         List<TrelloBoardDto> fetchedTrelloBoards = trelloClient.getTrelloBoards();
 
