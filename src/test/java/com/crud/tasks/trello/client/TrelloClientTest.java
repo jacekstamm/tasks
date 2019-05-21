@@ -1,8 +1,12 @@
 package com.crud.tasks.trello.client;
 
+import com.crud.tasks.domain.Badges;
+import com.crud.tasks.domain.CreatedTrelloCard;
 import com.crud.tasks.domain.TrelloBoardDto;
+import com.crud.tasks.domain.TrelloCardDto;
 import com.crud.tasks.trello.config.TrelloConfig;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -28,18 +32,21 @@ public class TrelloClientTest{
     @Mock
     private TrelloConfig trelloConfig;
 
+    @Before
+    public void init() {
+        Mockito.when(trelloConfig.getTrelloApiEndpoint()).thenReturn("http://test.com");
+        Mockito.when(trelloConfig.getTrelloAppKey()).thenReturn("test");
+        Mockito.when(trelloConfig.getTrelloToken()).thenReturn("test");
+    }
+
     @Test
     public void testShouldFetchTrelloBoard() throws URISyntaxException {
         //Given
-        Mockito.when(trelloConfig.getTrelloApiEndpoint()).thenReturn("https://test.com");
-        Mockito.when(trelloConfig.getTrelloAppKey()).thenReturn("test");
-        Mockito.when(trelloConfig.getTrelloToken()).thenReturn("test");
-
         TrelloBoardDto[] trelloBoards = new TrelloBoardDto[1];
         trelloBoards[0] = new TrelloBoardDto("test_id", "test_board", new ArrayList<>());
 
 
-        URI url = new URI("https://test.com/members/null/boards?key=test&token=test&fields=name,%20id&lists=all");
+        URI url = new URI("http://test.com/members/null/boards?key=test&token=test&fields=name,%20id&lists=all");
 
         Mockito.when(restTemplate.getForObject(url, TrelloBoardDto[].class)).thenReturn(trelloBoards);
         //When
@@ -50,5 +57,30 @@ public class TrelloClientTest{
         Assert.assertEquals("test_id", fetchedTrelloBoards.get(0).getId());
         Assert.assertEquals("test_board", fetchedTrelloBoards.get(0).getName());
         Assert.assertEquals(new ArrayList<>(), fetchedTrelloBoards.get(0).getLists());
+    }
+
+    @Test
+    public void testShouldCreateCard() throws URISyntaxException {
+        //Given
+        TrelloCardDto trelloCardDto = new TrelloCardDto(
+                "Test task",
+                "Test Description",
+                "top",
+                "test_id");
+
+        URI uri = new URI("http://test.com/cards?key=test&token=test&name=Test%20task&desc=Test%20Description&pos=top&idList=test_id");
+
+        CreatedTrelloCard createdTrelloCard = new CreatedTrelloCard(
+                "1",
+                "Test task",
+                "http://test.com");
+
+        Mockito.when(restTemplate.postForObject(uri, null, CreatedTrelloCard.class)).thenReturn(createdTrelloCard);
+        //When
+        CreatedTrelloCard newCart = trelloClient.createNewCard(trelloCardDto);
+        //Then
+        Assert.assertEquals("1", newCart.getId());
+        Assert.assertEquals("Test task", newCart.getName());
+        Assert.assertEquals("http://test.com", newCart.getShortUrl());
     }
 }

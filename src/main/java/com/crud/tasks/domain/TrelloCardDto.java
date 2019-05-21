@@ -12,5 +12,5 @@ public class TrelloCardDto {
     private String name;
     private String desc;
     private String pos;
-    private String listId;
+    private String idList;
 }
