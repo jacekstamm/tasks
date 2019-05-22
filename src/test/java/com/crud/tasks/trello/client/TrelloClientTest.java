@@ -91,6 +91,7 @@ public class TrelloClientTest{
         URI url = new URI("http://test.com/members/null/boards?key=test&token=test&fields=name,%20id&lists=all");
 
         Mockito.when(restTemplate.getForObject(url, TrelloBoardDto[].class)).thenReturn(null);
+
         //When
         List<TrelloBoardDto> trelloBoardDtoList = trelloClient.getTrelloBoards();
 
