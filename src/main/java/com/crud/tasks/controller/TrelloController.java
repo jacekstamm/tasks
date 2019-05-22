@@ -22,7 +22,7 @@ public class TrelloController {
         return trelloClient.getTrelloBoards();
     }
 
-    @PostMapping(value = "createTrelloCard")
+    @RequestMapping(method = RequestMethod.POST, value = "createTrelloCard")
     public CreatedTrelloCard createTrelloCard(@RequestBody TrelloCardDto trelloCardDto) {
         return trelloClient.createNewCard(trelloCardDto);
     }
