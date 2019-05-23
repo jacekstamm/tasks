@@ -30,7 +30,6 @@ public class TrelloClient {
     TrelloConfig trelloConfig;
 
     public List<TrelloBoardDto> getTrelloBoards() {
-
         URI url = urlBuilder();
         LOGGER.info("restTemplate.getForObject url: " + url.toString());
 
@@ -56,9 +55,9 @@ public class TrelloClient {
                 .queryParam("key", trelloConfig.getTrelloAppKey())
                 .queryParam("token", trelloConfig.getTrelloToken())
                 .queryParam("name", trelloCardDto.getName())
-                .queryParam("desc", trelloCardDto.getDescription())
+                .queryParam("description", trelloCardDto.getDescription())
                 .queryParam("pos", trelloCardDto.getPos())
-                .queryParam("idList", trelloCardDto.getListID()).build().encode().toUri();
+                .queryParam("listId", trelloCardDto.getListId()).build().encode().toUri();
         LOGGER.info("restTemplate.postForObject url: " + url);
 
         return restTemplate.postForObject(url, null, CreatedTrelloCard.class);
