@@ -30,14 +30,18 @@ dependencies {
 	compile 'org.springframework.boot:spring-boot-starter-web'
 	compile 'org.projectlombok:lombok:1.18.6'
 	compile 'org.springframework.boot:spring-boot-starter-data-jpa'
-	compile 'mysql:mysql-connector-java'
-	//compile 'org.postgresql:postgresql'
-
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	compile 'org.springframework.boot:spring-boot-starter-mail:2.1.5.RELEASE'
 
 	//providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
 
 	//Swagger
 	compile 'io.springfox:springfox-swagger2:2.7.0'
 	compile 'io.springfox:springfox-swagger-ui:2.7.0'
+	
+	//DATABASE
+	compile 'mysql:mysql-connector-java'
+	//compile 'org.postgresql:postgresql'
+
+	//TESTS
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
