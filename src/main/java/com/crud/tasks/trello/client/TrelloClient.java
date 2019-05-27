@@ -24,10 +24,10 @@ public class TrelloClient {
     private static final Logger LOGGER = LoggerFactory.getLogger(TrelloClient.class);
 
     @Autowired
-    RestTemplate restTemplate;
+    private RestTemplate restTemplate;
 
     @Autowired
-    TrelloConfig trelloConfig;
+    private TrelloConfig trelloConfig;
 
     public List<TrelloBoardDto> getTrelloBoards() {
         URI url = urlBuilder();
