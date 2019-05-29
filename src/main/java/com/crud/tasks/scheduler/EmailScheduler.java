@@ -4,12 +4,15 @@ import com.crud.tasks.config.AdminConfig;
 import com.crud.tasks.domain.Mail;
 import com.crud.tasks.repository.TaskRepository;
 import com.crud.tasks.service.SimpleEmailService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 @Component
 public class EmailScheduler {
+    private static final Logger LOGGER = LoggerFactory.getLogger(EmailScheduler.class);
 
     @Autowired
     private SimpleEmailService simpleEmailService;
@@ -20,7 +23,7 @@ public class EmailScheduler {
     @Autowired
     private AdminConfig adminConfig;
 
-    private static final String SUBJECT = "Tasks: Once a day e-mail.";
+
 
     @Scheduled(cron = "0 0 10 * * MON-FRI")
     public void sendInformationEmail() {
@@ -29,12 +32,14 @@ public class EmailScheduler {
         if (size != 1) {
             s = "s";
         }
+
+        final String SUBJECT = "Task" + s + ": Once a day e-mail.";
         simpleEmailService.send(new Mail(
                 adminConfig.getAdminMail(),
                 SUBJECT,
-                "Currently in databases you got: " + size + " task" + s +".",
+                "Currently in databases you got: " + size + " task" + s + ".",
                 ""
         ));
-
+        LOGGER.info("Currently in databases you got: " + size + " task" + s + ".");
     }
 }
