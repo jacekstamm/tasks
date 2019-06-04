@@ -2,56 +2,62 @@ package com.crud.tasks.scheduler;
 
 import com.crud.tasks.domain.Task;
 import com.crud.tasks.repository.TaskRepository;
-import org.junit.Assert;
+import com.icegreen.greenmail.util.GreenMail;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import javax.annotation.Resource;
 
-@RunWith(SpringRunner.class)
+
+@RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
 public class EmailSchedulerTest {
+
 
     @Autowired
     private TaskRepository taskRepository;
     @Autowired
     private EmailScheduler emailScheduler;
 
-    @Test
-    public void testShouldNotRetrieveS() {
-        //Given
-        Task cleaning = new Task("Sprzątanie", "Sprzątanie pokoju");
+    @Resource
+    private JavaMailSenderImpl javaMailSender;
+    private GreenMail greenMail;
 
-        taskRepository.save(cleaning);
-        //When
-        emailScheduler.sendInformationEmail();
 
-        //Then
+    @Before
+    public void testSmtpInit() {
 
-        Assert.assertEquals(1, taskRepository.count());
-        //CleanUp
-        taskRepository.delete(cleaning.getId());
     }
 
     @Test
-    public void testShouldRetrieveS() {
+    public void testMail() {
         //Given
         Task cleaning = new Task("Sprzątanie", "Sprzątanie pokoju");
-        Task painting = new Task("Malowanie", "Łazienki");
-
         taskRepository.save(cleaning);
-        taskRepository.save(painting);
 
         //When
-        emailScheduler.sendInformationEmail();
 
+
+
+
+
+        emailScheduler.sendInformationEmail();
         //Then
-        Assert.assertEquals(2, taskRepository.count());
+
+
 
         //CleanUp
+
+
+
+
+
         taskRepository.delete(cleaning.getId());
-        taskRepository.delete(painting.getId());
+
+
     }
 }
-

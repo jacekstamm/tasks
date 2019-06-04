@@ -43,5 +43,7 @@ dependencies {
 	//compile 'org.postgresql:postgresql'
 
 	//TESTS
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testCompile 'org.springframework.boot:spring-boot-starter-test'
+	testCompile group: 'com.icegreen', name: 'greenmail', version: '1.5.10'
+
 }
